@@ -17,7 +17,10 @@ Nice to have:
 * Plugging this into a a build process and have it read in the test results for pass/fail
 
 
-## Python Requirements:
+## Requirements:
+* docker
+* docker-compose
+* Python 3.6
 * pipenv: `pip3 install pipenv`
 * mo: `pip3 install mo`    
 
