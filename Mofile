@@ -1,0 +1,66 @@
+tasks:
+  bootstrap:
+    steps:
+      - PIPENV_VENV_IN_PROJECT=1 pipenv install
+      - pipenv run pip list
+      - docker pull chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+      - docker pull chhibber/saltstack:v2017.7.2-master-ubuntu1604
+
+  up:
+    description: Stands up a salt master and a couple salt minion via docker-compose
+    steps:
+      - docker-compose up -d
+      - sleep 20
+      - docker ps | grep salt
+      - docker exec saltstackdocker_master_1 salt "*" state.highstate
+    after:
+      - down
+      - bootstrap
+
+  down:
+    description: Shutdown the salt cluster
+    steps:
+      - docker-compose down
+
+  build-docker-images:
+    description: Build all our docker images and push to repo
+    steps:
+      - docker build -t chhibber/saltstack:v2017.7.2-minion-ubuntu1604 docker/salt-minion
+      - docker build -t chhibber/saltstack:v2017.7.2-master-ubuntu1604 docker/salt-master
+      - docker push chhibber/saltstack:v2017.7.2-master-ubuntu1604
+      - docker push chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+
+  test:
+     steps:
+       - pipenv run py.test --verbose   test/test.py --connection=docker --hosts saltstackdocker_minion1_1,saltstackdocker_minion2_1
+
+  example-run:
+    description: Run through salt changes and verification
+    steps:
+      - bash build/example-run.sh
+      - pipenv run py.test --verbose   test/test-change.py --connection=docker --hosts saltstackdocker_minion1_1,saltstackdocker_minion2_1
+    after:
+      - down
+      - boostrap
+      - up
+      - test
+
+#
+#  docs:
+#    steps:
+#      - pipenv run python setup.py build_sphinx
+#    after:
+#      - bootstrap
+#
+#  release:
+#    steps:
+#      - pipenv run python setup.py bdist_wheel
+#      - pipenv run twine upload dist/*
+#      - echo Now make a git tag and update the version.
+#    after:
+#      - bootstrap
+#
+#  something:
+#    description: Do something.
+#    steps:
+#      - blah hello

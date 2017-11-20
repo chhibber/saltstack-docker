@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  master:
+    image: chhibber/saltstack:v2017.7.2-master-ubuntu1604
+    environment:
+      SALT_USE: minion
+      SALT_NAME: minion
+      SALT_GRAINS: "{'test': 'test'}"
+      LOG_LEVEL: debug
+    hostname: master
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./srv/salt:/srv/salt/:rw
+    command: "salt-master -l info"
+
+  minion1:
+    image: chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+    depends_on:
+      - master
+    ports:
+      - "9090:80"
+    hostname: minion1
+    command: "salt-minion -l info"
+
+  minion2:
+    image: chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+    depends_on:
+      - master
+    ports:
+      - "9091:80"
+    hostname: minion2
+    command: "salt-minion -l info"
+
+
