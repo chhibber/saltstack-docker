@@ -3,6 +3,7 @@ import pytest
 import testinfra
 import requests
 
+
 @pytest.mark.parametrize("name,version", [
     ("nginx", "1.10")
 ])
@@ -11,11 +12,6 @@ def test_package_installed(host, name, version):
     assert pkg.is_installed
     assert pkg.version.startswith(version)
 
-
-#@pytest.mark.parametrize("name", [("nginx")])
-#def test_process_is_running(host, name):
-#    nginx = host.process.get(name)
-#    assert nginx.is_running
 
 def test_site_file(host):
     site = host.file("/etc/nginx/sites-enabled/default")

@@ -1,0 +1,900 @@
+
+ λ Running task: down
+ > Executing: docker-compose down
+   Stopping saltstackdocker_minion1_1 ...
+   Stopping saltstackdocker_minion2_1 ...
+   Stopping saltstackdocker_master_1  ...
+   
+   Stopping saltstackdocker_minion1_1 ... done
+   
+   Stopping saltstackdocker_minion2_1 ... done
+   
+   Stopping saltstackdocker_master_1  ... done
+   Removing saltstackdocker_minion1_1 ...
+   Removing saltstackdocker_minion2_1 ...
+   Removing saltstackdocker_master_1  ...
+   
+   Removing saltstackdocker_minion1_1 ... done
+   
+   Removing saltstackdocker_master_1  ... done
+   
+   Removing saltstackdocker_minion2_1 ... done
+   Removing network saltstackdocker_default
+ λ Running task: bootstrap
+ > Executing: PIPENV_VENV_IN_PROJECT=1 pipenv install
+   Installing dependencies from Pipfile.lock (01b82f)…
+   To activate this project's virtualenv, run the following:
+   $ pipenv shell
+ > Executing: pipenv run pip list
+   DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
+   certifi (2017.11.5)
+   chardet (3.0.4)
+   idna (2.6)
+   pip (9.0.1)
+   py (1.5.2)
+   pytest (3.2.5)
+   requests (2.18.4)
+   setuptools (36.7.2)
+   six (1.11.0)
+   testinfra (1.9.0)
+   urllib3 (1.22)
+   wheel (0.30.0)
+ > Executing: docker pull chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+   v2017.7.2-minion-ubuntu1604: Pulling from chhibber/saltstack
+   Digest: sha256:a45bb6f0e1f4e308cfc0f7ce119c8fa0f24611321c1d903b2ddcf85754dbcbd5
+   Status: Image is up to date for chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+ > Executing: docker pull chhibber/saltstack:v2017.7.2-master-ubuntu1604
+   v2017.7.2-master-ubuntu1604: Pulling from chhibber/saltstack
+   Digest: sha256:46b3205f34a95c83ce3f81fd824afeae70a03c0058922e588ca88100e58f9603
+   Status: Image is up to date for chhibber/saltstack:v2017.7.2-master-ubuntu1604
+ λ Skipping task: down
+ λ Running task: bootstrap
+ > Executing: PIPENV_VENV_IN_PROJECT=1 pipenv install
+   Installing dependencies from Pipfile.lock (01b82f)…
+   To activate this project's virtualenv, run the following:
+   $ pipenv shell
+ > Executing: pipenv run pip list
+   DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
+   certifi (2017.11.5)
+   chardet (3.0.4)
+   idna (2.6)
+   pip (9.0.1)
+   py (1.5.2)
+   pytest (3.2.5)
+   requests (2.18.4)
+   setuptools (36.7.2)
+   six (1.11.0)
+   testinfra (1.9.0)
+   urllib3 (1.22)
+   wheel (0.30.0)
+ > Executing: docker pull chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+   v2017.7.2-minion-ubuntu1604: Pulling from chhibber/saltstack
+   Digest: sha256:a45bb6f0e1f4e308cfc0f7ce119c8fa0f24611321c1d903b2ddcf85754dbcbd5
+   Status: Image is up to date for chhibber/saltstack:v2017.7.2-minion-ubuntu1604
+ > Executing: docker pull chhibber/saltstack:v2017.7.2-master-ubuntu1604
+   v2017.7.2-master-ubuntu1604: Pulling from chhibber/saltstack
+   Digest: sha256:46b3205f34a95c83ce3f81fd824afeae70a03c0058922e588ca88100e58f9603
+   Status: Image is up to date for chhibber/saltstack:v2017.7.2-master-ubuntu1604
+ λ Running task: up
+ > Executing: docker-compose up -d
+   The Docker Engine you're using is running in swarm mode.
+   Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
+   To deploy your application across the swarm, use `docker stack deploy`.
+   Creating network "saltstackdocker_default" with the default driver
+   Creating saltstackdocker_master_1 ...
+   Creating saltstackdocker_master_1
+   
+   Creating saltstackdocker_master_1 ... done
+   Creating saltstackdocker_minion1_1 ...
+   Creating saltstackdocker_minion2_1 ...
+   Creating saltstackdocker_minion1_1
+   Creating saltstackdocker_minion2_1
+   
+   Creating saltstackdocker_minion2_1 ... done
+   
+   Creating saltstackdocker_minion1_1 ... done
+   
+ > Executing: sleep 20
+ > Executing: docker ps | grep salt
+   7dacd2c6370b        chhibber/saltstack:v2017.7.2-minion-ubuntu1604   "/usr/bin/dumb-ini..."   14 seconds ago      Up 20 seconds       0.0.0.0:9090->80/tcp               saltstackdocker_minion1_1
+   7e43b0e24720        chhibber/saltstack:v2017.7.2-minion-ubuntu1604   "/usr/bin/dumb-ini..."   14 seconds ago      Up 20 seconds       0.0.0.0:9091->80/tcp               saltstackdocker_minion2_1
+   167f1ee032b6        chhibber/saltstack:v2017.7.2-master-ubuntu1604   "salt-master -l info"    15 seconds ago      Up 21 seconds       0.0.0.0:8080-8081->8080-8081/tcp   saltstackdocker_master_1
+ > Executing: docker exec saltstackdocker_master_1 salt "*" state.highstate
+   minion2:
+   ----------
+   ID: nginx
+   Function: pkg.installed
+   Result: True
+   Comment: The following packages were installed/updated: nginx
+   Started: 08:15:27.841611
+   Duration: 13258.958 ms
+   Changes:
+   ----------
+   fontconfig-config:
+   ----------
+   new:
+   2.11.94-0ubuntu1.1
+   old:
+   fonts-dejavu-core:
+   ----------
+   new:
+   2.35-1
+   old:
+   geoip-database:
+   ----------
+   new:
+   20160408-1
+   old:
+   libfontconfig1:
+   ----------
+   new:
+   2.11.94-0ubuntu1.1
+   old:
+   libfreetype6:
+   ----------
+   new:
+   2.6.1-0.1ubuntu2.3
+   old:
+   libgd3:
+   ----------
+   new:
+   2.1.1-4ubuntu0.16.04.8
+   old:
+   libgeoip1:
+   ----------
+   new:
+   1.6.9-1
+   old:
+   libicu55:
+   ----------
+   new:
+   55.1-7ubuntu0.3
+   old:
+   libjbig0:
+   ----------
+   new:
+   2.1-3.1
+   old:
+   libjpeg-turbo8:
+   ----------
+   new:
+   1.4.2-0ubuntu3
+   old:
+   libjpeg8:
+   ----------
+   new:
+   8c-2ubuntu8
+   old:
+   libpng12-0:
+   ----------
+   new:
+   1.2.54-1ubuntu1
+   old:
+   libtiff5:
+   ----------
+   new:
+   4.0.6-1ubuntu0.2
+   old:
+   libvpx3:
+   ----------
+   new:
+   1.5.0-2ubuntu1
+   old:
+   libx11-6:
+   ----------
+   new:
+   2:1.6.3-1ubuntu2
+   old:
+   libx11-data:
+   ----------
+   new:
+   2:1.6.3-1ubuntu2
+   old:
+   libxau6:
+   ----------
+   new:
+   1:1.0.8-1
+   old:
+   libxcb1:
+   ----------
+   new:
+   1.11.1-1ubuntu1
+   old:
+   libxdmcp6:
+   ----------
+   new:
+   1:1.1.2-1.1
+   old:
+   libxml2:
+   ----------
+   new:
+   2.9.3+dfsg1-1ubuntu0.3
+   old:
+   libxpm4:
+   ----------
+   new:
+   1:3.5.11-1ubuntu0.16.04.1
+   old:
+   libxslt1.1:
+   ----------
+   new:
+   1.1.28-2.1ubuntu0.1
+   old:
+   nginx:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   nginx-common:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   nginx-core:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   sgml-base:
+   ----------
+   new:
+   1.26+nmu4ubuntu1
+   old:
+   ucf:
+   ----------
+   new:
+   3.0036
+   old:
+   xml-core:
+   ----------
+   new:
+   0.13+nmu2
+   old:
+   ----------
+   ID: /etc/nginx/sites-enabled/default
+   Function: file.managed
+   Result: True
+   Comment: File /etc/nginx/sites-enabled/default updated
+   Started: 08:15:41.104778
+   Duration: 7.703 ms
+   Changes:
+   ----------
+   diff:
+   ---
+   +++
+   @@ -1,86 +1,18 @@
+   -##
+   -# You should look at the following URL's in order to grasp a solid understanding
+   -# of Nginx configuration files in order to fully unleash the power of Nginx.
+   -# http://wiki.nginx.org/Pitfalls
+   -# http://wiki.nginx.org/QuickStart
+   -# http://wiki.nginx.org/Configuration
+   -#
+   -# Generally, you will want to move this file somewhere, and start with a clean
+   -# file but keep this around for reference. Or just disable in sites-enabled.
+   -#
+   -# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+   -##
+   +server {
+   +        listen 80 default_server;
+   +        listen [::]:80 default_server;
+   -# Default server configuration
+   -#
+   -server {
+   -	listen 80 default_server;
+   -	listen [::]:80 default_server;
+   +        root /var/www/html;
+   -	# SSL configuration
+   -	#
+   -	# listen 443 ssl default_server;
+   -	# listen [::]:443 ssl default_server;
+   -	#
+   -	# Note: You should disable gzip for SSL traffic.
+   -	# See: https://bugs.debian.org/773332
+   -	#
+   -	# Read up on ssl_ciphers to ensure a secure configuration.
+   -	# See: https://bugs.debian.org/765782
+   -	#
+   -	# Self signed certs generated by the ssl-cert package
+   -	# Don't use them in a production server!
+   -	#
+   -	# include snippets/snakeoil.conf;
+   +        # Add index.php to the list if you are using PHP
+   -	root /var/www/html;
+   +        index index.yaml index.html index.htm index.nginx-debian.html;
+   -	# Add index.php to the list if you are using PHP
+   -	index index.html index.htm index.nginx-debian.html;
+   +        server_name _;
+   -	server_name _;
+   -
+   -	location / {
+   -		# First attempt to serve request as file, then
+   -		# as directory, then fall back to displaying a 404.
+   -		try_files $uri $uri/ =404;
+   -	}
+   -
+   -	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+   -	#
+   -	#location ~ \.php$ {
+   -	#	include snippets/fastcgi-php.conf;
+   -	#
+   -	#	# With php7.0-cgi alone:
+   -	#	fastcgi_pass 127.0.0.1:9000;
+   -	#	# With php7.0-fpm:
+   -	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+   -	#}
+   -
+   -	# deny access to .htaccess files, if Apache's document root
+   -	# concurs with nginx's one
+   -	#
+   -	#location ~ /\.ht {
+   -	#	deny all;
+   -	#}
+   +        location / {
+   +                # First attempt to serve request as file, then
+   +                # as directory, then fall back to displaying a 404.
+   +                try_files $uri $uri/ =404;
+   +        }
+   }
+   -
+   -
+   -# Virtual Host configuration for example.com
+   -#
+   -# You can move that to a different file under sites-available/ and symlink that
+   -# to sites-enabled/ to enable it.
+   -#
+   -#server {
+   -#	listen 80;
+   -#	listen [::]:80;
+   -#
+   -#	server_name example.com;
+   -#
+   -#	root /var/www/example.com;
+   -#	index index.html;
+   -#
+   -#	location / {
+   -#		try_files $uri $uri/ =404;
+   -#	}
+   -#}
+   ----------
+   ID: /var/www/html/index.yaml
+   Function: file.managed
+   Result: True
+   Comment: File /var/www/html/index.yaml updated
+   Started: 08:15:41.112729
+   Duration: 1.855 ms
+   Changes:
+   ----------
+   diff:
+   New file
+   mode:
+   0444
+   ----------
+   ID: nginx - start
+   Function: cmd.run
+   Name: nginx
+   Result: True
+   Comment: Command "nginx" run
+   Started: 08:15:41.115442
+   Duration: 315.835 ms
+   Changes:
+   ----------
+   pid:
+   792
+   retcode:
+   0
+   stderr:
+   stdout:
+   ----------
+   ID: nginx - restart
+   Function: cmd.wait
+   Name: kill -HUP $( cat /var/run/nginx.pid )
+   Result: True
+   Comment: Command "kill -HUP $( cat /var/run/nginx.pid )" run
+   Started: 08:15:41.434831
+   Duration: 145.75 ms
+   Changes:
+   ----------
+   pid:
+   800
+   retcode:
+   0
+   stderr:
+   stdout:
+   Summary for minion2
+   ------------
+   Succeeded: 5 (changed=5)
+   Failed:    0
+   ------------
+   Total states run:     5
+   Total run time:  13.730 s
+   minion1:
+   ----------
+   ID: nginx
+   Function: pkg.installed
+   Result: True
+   Comment: The following packages were installed/updated: nginx
+   Started: 08:15:27.758248
+   Duration: 13332.613 ms
+   Changes:
+   ----------
+   fontconfig-config:
+   ----------
+   new:
+   2.11.94-0ubuntu1.1
+   old:
+   fonts-dejavu-core:
+   ----------
+   new:
+   2.35-1
+   old:
+   geoip-database:
+   ----------
+   new:
+   20160408-1
+   old:
+   libfontconfig1:
+   ----------
+   new:
+   2.11.94-0ubuntu1.1
+   old:
+   libfreetype6:
+   ----------
+   new:
+   2.6.1-0.1ubuntu2.3
+   old:
+   libgd3:
+   ----------
+   new:
+   2.1.1-4ubuntu0.16.04.8
+   old:
+   libgeoip1:
+   ----------
+   new:
+   1.6.9-1
+   old:
+   libicu55:
+   ----------
+   new:
+   55.1-7ubuntu0.3
+   old:
+   libjbig0:
+   ----------
+   new:
+   2.1-3.1
+   old:
+   libjpeg-turbo8:
+   ----------
+   new:
+   1.4.2-0ubuntu3
+   old:
+   libjpeg8:
+   ----------
+   new:
+   8c-2ubuntu8
+   old:
+   libpng12-0:
+   ----------
+   new:
+   1.2.54-1ubuntu1
+   old:
+   libtiff5:
+   ----------
+   new:
+   4.0.6-1ubuntu0.2
+   old:
+   libvpx3:
+   ----------
+   new:
+   1.5.0-2ubuntu1
+   old:
+   libx11-6:
+   ----------
+   new:
+   2:1.6.3-1ubuntu2
+   old:
+   libx11-data:
+   ----------
+   new:
+   2:1.6.3-1ubuntu2
+   old:
+   libxau6:
+   ----------
+   new:
+   1:1.0.8-1
+   old:
+   libxcb1:
+   ----------
+   new:
+   1.11.1-1ubuntu1
+   old:
+   libxdmcp6:
+   ----------
+   new:
+   1:1.1.2-1.1
+   old:
+   libxml2:
+   ----------
+   new:
+   2.9.3+dfsg1-1ubuntu0.3
+   old:
+   libxpm4:
+   ----------
+   new:
+   1:3.5.11-1ubuntu0.16.04.1
+   old:
+   libxslt1.1:
+   ----------
+   new:
+   1.1.28-2.1ubuntu0.1
+   old:
+   nginx:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   nginx-common:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   nginx-core:
+   ----------
+   new:
+   1.10.3-0ubuntu0.16.04.2
+   old:
+   sgml-base:
+   ----------
+   new:
+   1.26+nmu4ubuntu1
+   old:
+   ucf:
+   ----------
+   new:
+   3.0036
+   old:
+   xml-core:
+   ----------
+   new:
+   0.13+nmu2
+   old:
+   ----------
+   ID: /etc/nginx/sites-enabled/default
+   Function: file.managed
+   Result: True
+   Comment: File /etc/nginx/sites-enabled/default updated
+   Started: 08:15:41.095054
+   Duration: 7.97 ms
+   Changes:
+   ----------
+   diff:
+   ---
+   +++
+   @@ -1,86 +1,18 @@
+   -##
+   -# You should look at the following URL's in order to grasp a solid understanding
+   -# of Nginx configuration files in order to fully unleash the power of Nginx.
+   -# http://wiki.nginx.org/Pitfalls
+   -# http://wiki.nginx.org/QuickStart
+   -# http://wiki.nginx.org/Configuration
+   -#
+   -# Generally, you will want to move this file somewhere, and start with a clean
+   -# file but keep this around for reference. Or just disable in sites-enabled.
+   -#
+   -# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+   -##
+   +server {
+   +        listen 80 default_server;
+   +        listen [::]:80 default_server;
+   -# Default server configuration
+   -#
+   -server {
+   -	listen 80 default_server;
+   -	listen [::]:80 default_server;
+   +        root /var/www/html;
+   -	# SSL configuration
+   -	#
+   -	# listen 443 ssl default_server;
+   -	# listen [::]:443 ssl default_server;
+   -	#
+   -	# Note: You should disable gzip for SSL traffic.
+   -	# See: https://bugs.debian.org/773332
+   -	#
+   -	# Read up on ssl_ciphers to ensure a secure configuration.
+   -	# See: https://bugs.debian.org/765782
+   -	#
+   -	# Self signed certs generated by the ssl-cert package
+   -	# Don't use them in a production server!
+   -	#
+   -	# include snippets/snakeoil.conf;
+   +        # Add index.php to the list if you are using PHP
+   -	root /var/www/html;
+   +        index index.yaml index.html index.htm index.nginx-debian.html;
+   -	# Add index.php to the list if you are using PHP
+   -	index index.html index.htm index.nginx-debian.html;
+   +        server_name _;
+   -	server_name _;
+   -
+   -	location / {
+   -		# First attempt to serve request as file, then
+   -		# as directory, then fall back to displaying a 404.
+   -		try_files $uri $uri/ =404;
+   -	}
+   -
+   -	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+   -	#
+   -	#location ~ \.php$ {
+   -	#	include snippets/fastcgi-php.conf;
+   -	#
+   -	#	# With php7.0-cgi alone:
+   -	#	fastcgi_pass 127.0.0.1:9000;
+   -	#	# With php7.0-fpm:
+   -	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+   -	#}
+   -
+   -	# deny access to .htaccess files, if Apache's document root
+   -	# concurs with nginx's one
+   -	#
+   -	#location ~ /\.ht {
+   -	#	deny all;
+   -	#}
+   +        location / {
+   +                # First attempt to serve request as file, then
+   +                # as directory, then fall back to displaying a 404.
+   +                try_files $uri $uri/ =404;
+   +        }
+   }
+   -
+   -
+   -# Virtual Host configuration for example.com
+   -#
+   -# You can move that to a different file under sites-available/ and symlink that
+   -# to sites-enabled/ to enable it.
+   -#
+   -#server {
+   -#	listen 80;
+   -#	listen [::]:80;
+   -#
+   -#	server_name example.com;
+   -#
+   -#	root /var/www/example.com;
+   -#	index index.html;
+   -#
+   -#	location / {
+   -#		try_files $uri $uri/ =404;
+   -#	}
+   -#}
+   ----------
+   ID: /var/www/html/index.yaml
+   Function: file.managed
+   Result: True
+   Comment: File /var/www/html/index.yaml updated
+   Started: 08:15:41.103273
+   Duration: 2.287 ms
+   Changes:
+   ----------
+   diff:
+   New file
+   mode:
+   0444
+   ----------
+   ID: nginx - start
+   Function: cmd.run
+   Name: nginx
+   Result: True
+   Comment: Command "nginx" run
+   Started: 08:15:41.106448
+   Duration: 339.667 ms
+   Changes:
+   ----------
+   pid:
+   792
+   retcode:
+   0
+   stderr:
+   stdout:
+   ----------
+   ID: nginx - restart
+   Function: cmd.wait
+   Name: kill -HUP $( cat /var/run/nginx.pid )
+   Result: True
+   Comment: Command "kill -HUP $( cat /var/run/nginx.pid )" run
+   Started: 08:15:41.448811
+   Duration: 139.758 ms
+   Changes:
+   ----------
+   pid:
+   800
+   retcode:
+   0
+   stderr:
+   stdout:
+   Summary for minion1
+   ------------
+   Succeeded: 5 (changed=5)
+   Failed:    0
+   ------------
+   Total states run:     5
+   Total run time:  13.822 s
+ λ Running task: test
+ > Executing: pipenv run py.test --verbose   test/test.py --connection=docker --hosts saltstackdocker_minion1_1,saltstackdocker_minion2_1
+   ============================= test session starts ==============================
+   platform darwin -- Python 3.6.1, pytest-3.2.5, py-1.5.2, pluggy-0.4.0 -- /Users/sanjeevchhibber/.local/share/virtualenvs/saltstack-docker-QiUw7kcN/bin/python3.6m
+   cachedir: .cache
+   rootdir: /Users/sanjeevchhibber/personal/saltstack-docker, inifile:
+   plugins: testinfra-1.9.0
+   collecting ... collected 8 items
+   test/test.py::test_package_installed[docker://saltstackdocker_minion1_1-nginx-1.10] PASSED
+   test/test.py::test_site_file[docker://saltstackdocker_minion1_1] PASSED
+   test/test.py::test_index_file[docker://saltstackdocker_minion1_1] PASSED
+   test/test.py::test_package_installed[docker://saltstackdocker_minion2_1-nginx-1.10] PASSED
+   test/test.py::test_site_file[docker://saltstackdocker_minion2_1] PASSED
+   test/test.py::test_index_file[docker://saltstackdocker_minion2_1] PASSED
+   test/test.py::test_sites[minion1-9090] PASSED
+   test/test.py::test_sites[minion2-9091] PASSED
+   =========================== 8 passed in 2.44 seconds ===========================
+ λ Running task: example-run
+ > Executing: bash build/example-run.sh
+   #----------------------------------------------------------------------#
+   Switching back to the default nginx configuration
+   *            File: index.nginx-debian.html
+   * Salt batch size: 1
+   * Salt batch wait: 10s
+   #----------------------------------------------------------------------#
+   Executing run on ['minion2']
+   jid:
+   20171120081546896053
+   minion2:
+   ----------
+   ID: nginx
+   Function: pkg.installed
+   Result: True
+   Comment: All specified packages are already installed
+   Started: 08:15:47.787060
+   Duration: 1394.535 ms
+   Changes:
+   ----------
+   ID: /etc/nginx/sites-enabled/default
+   Function: file.managed
+   Result: True
+   Comment: File /etc/nginx/sites-enabled/default updated
+   Started: 08:15:49.185296
+   Duration: 4.42 ms
+   Changes:
+   ----------
+   diff:
+   ---
+   +++
+   @@ -6,7 +6,7 @@
+   # Add index.php to the list if you are using PHP
+   -        index index.yaml index.html index.htm index.nginx-debian.html;
+   +        index index.nginx-debian.html;
+   server_name _;
+   ----------
+   ID: /var/www/html/index.yaml
+   Function: file.managed
+   Result: True
+   Comment: File /var/www/html/index.yaml is in the correct state
+   Started: 08:15:49.189955
+   Duration: 1.233 ms
+   Changes:
+   ----------
+   ID: nginx - start
+   Function: cmd.run
+   Name: nginx
+   Result: True
+   Comment: unless execution succeeded
+   Started: 08:15:49.191975
+   Duration: 147.681 ms
+   Changes:
+   ----------
+   ID: nginx - restart
+   Function: cmd.wait
+   Name: kill -HUP $( cat /var/run/nginx.pid )
+   Result: True
+   Comment: Command "kill -HUP $( cat /var/run/nginx.pid )" run
+   Started: 08:15:49.341561
+   Duration: 135.081 ms
+   Changes:
+   ----------
+   pid:
+   929
+   retcode:
+   0
+   stderr:
+   stdout:
+   Summary for minion2
+   ------------
+   Succeeded: 5 (changed=2)
+   Failed:    0
+   ------------
+   Total states run:     5
+   Total run time:   1.683 s
+   retcode:
+   0
+   Executing run on ['minion1']
+   jid:
+   20171120081559595231
+   minion1:
+   ----------
+   ID: nginx
+   Function: pkg.installed
+   Result: True
+   Comment: All specified packages are already installed
+   Started: 08:16:00.451546
+   Duration: 1357.536 ms
+   Changes:
+   ----------
+   ID: /etc/nginx/sites-enabled/default
+   Function: file.managed
+   Result: True
+   Comment: File /etc/nginx/sites-enabled/default updated
+   Started: 08:16:01.811757
+   Duration: 3.407 ms
+   Changes:
+   ----------
+   diff:
+   ---
+   +++
+   @@ -6,7 +6,7 @@
+   # Add index.php to the list if you are using PHP
+   -        index index.yaml index.html index.htm index.nginx-debian.html;
+   +        index index.nginx-debian.html;
+   server_name _;
+   ----------
+   ID: /var/www/html/index.yaml
+   Function: file.managed
+   Result: True
+   Comment: File /var/www/html/index.yaml is in the correct state
+   Started: 08:16:01.815396
+   Duration: 1.237 ms
+   Changes:
+   ----------
+   ID: nginx - start
+   Function: cmd.run
+   Name: nginx
+   Result: True
+   Comment: unless execution succeeded
+   Started: 08:16:01.817405
+   Duration: 142.985 ms
+   Changes:
+   ----------
+   ID: nginx - restart
+   Function: cmd.wait
+   Name: kill -HUP $( cat /var/run/nginx.pid )
+   Result: True
+   Comment: Command "kill -HUP $( cat /var/run/nginx.pid )" run
+   Started: 08:16:01.962176
+   Duration: 133.801 ms
+   Changes:
+   ----------
+   pid:
+   929
+   retcode:
+   0
+   stderr:
+   stdout:
+   Summary for minion1
+   ------------
+   Succeeded: 5 (changed=2)
+   Failed:    0
+   ------------
+   Total states run:     5
+   Total run time:   1.639 s
+   retcode:
+   0
+ > Executing: pipenv run py.test --verbose   test/test-change.py --connection=docker --hosts saltstackdocker_minion1_1,saltstackdocker_minion2_1
+   ============================= test session starts ==============================
+   platform darwin -- Python 3.6.1, pytest-3.2.5, py-1.5.2, pluggy-0.4.0 -- /Users/sanjeevchhibber/.local/share/virtualenvs/saltstack-docker-QiUw7kcN/bin/python3.6m
+   cachedir: .cache
+   rootdir: /Users/sanjeevchhibber/personal/saltstack-docker, inifile:
+   plugins: testinfra-1.9.0
+   collecting ... collected 6 items
+   test/test-change.py::test_package_installed[docker://saltstackdocker_minion1_1-nginx-1.10] PASSED
+   test/test-change.py::test_site_file[docker://saltstackdocker_minion1_1] PASSED
+   test/test-change.py::test_package_installed[docker://saltstackdocker_minion2_1-nginx-1.10] PASSED
+   test/test-change.py::test_site_file[docker://saltstackdocker_minion2_1] PASSED
+   test/test-change.py::test_sites[nginx-9090] PASSED
+   test/test-change.py::test_sites[nginx-9091] PASSED
+   =========================== 6 passed in 1.64 seconds ===========================
+
