@@ -39,7 +39,6 @@ tasks:
     description: Run through salt changes and verification
     steps:
       - bash build/example-run.sh
-
       - pipenv run py.test --verbose   test/test-change.py --connection=docker --hosts saltstackdocker_minion1_1,saltstackdocker_minion2_1
     after:
       - down
