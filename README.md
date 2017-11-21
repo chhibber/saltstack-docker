@@ -1,5 +1,5 @@
 # Purpose   
-One of problems I commonly run into is testing and verifying Salt states
+One of the problems I commonly run into is testing and verifying Salt states
 for a stand alone minion or a cluster (Salt master with minions). This 
 README focuses on the latter but the work here can be easily modified to
 work for a single Salt minion.
